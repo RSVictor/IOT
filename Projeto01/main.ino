@@ -1,20 +1,33 @@
-// I/O's Inputs (Entradas)
+// I/O's  Inputs (Entradas)
 // Outputs (Saídas)
 
-#define BUTTON_PIN 0
+#define BUTTON_PIN 2
 #define LED_PIN 1
 
-//Configurações
+// bool/digital: 0/1, false/true, LOW/HUGH
+bool button = 0, led = 0;
+
+//configurações
 void setup()
 {
-    pinMode(BUTTON_PIN,INPUT);
-    pinMode(LED_PIN,OUTPUT)
+    pinMode(BUTTON_PIN,INPUT_PULLUP);
+    pinMode(LED_PIN,OUTPUT);
 }
-
-//Lógica
+//lógica
 void loop()
 {
-    if( digitalRead(BUTTON_PIN) == HIGH ){
-        digitalWirite(LED_PIN, HIGH);
+    // I/O's:
+    button = !digitalRead(BUTTON_PIN);
+    digitalWrite(LED_PIN,led);
+
+    led = button;
+
+    // led = button? 1 : 0;
+    /* if(button){
+       led = 1 ;
     }
+    else{
+       led = 0;
+    }*/
+    
 }
