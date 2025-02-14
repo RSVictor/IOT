@@ -1,4 +1,6 @@
 
+// Foi mudado o botao de deslisante para um de pulsar
+
 #define ON_BUTTON_PIN 9
 #define BAR_SENSOR_PIN 1
 #define WINDOW1_SENSOR_PIN 2
@@ -12,7 +14,7 @@
 bool onButton = 0, barSensor = 0, window1Sensor = 0;
 bool window2Sensor = 0, roomSensor = 0, kitchenSensor = 0;
 bool garageSensor = 0, hallSensor = 0, alarm = 0;
-
+bool systemOn = 0, onButtonBuffer = 0;
 
 void setup()
 {
@@ -24,7 +26,9 @@ void setup()
     pinMode(KITCHEN_SENSOR_PIN, INPUT_PULLUP);
     pinMode(GARAGE_SENSOR_PIN, INPUT_PULLUP);
     pinMode(HALL_SENSOR_PIN, INPUT_PULLUP);
-    pinMode(ALARM_PIN, OUTPUT); 
+    pinMode(ALARM_PIN, OUTPUT);  
+
+    Serial.begin(9600);
 }
 
 void loop()
@@ -38,17 +42,20 @@ void loop()
     kitchenSensor = !digitalRead(KITCHEN_SENSOR_PIN);
     garageSensor = !digitalRead(GARAGE_SENSOR_PIN);
     hallSensor = !digitalRead(HALL_SENSOR_PIN);    
-    
     digitalWrite(ALARM_PIN, alarm);
 
-    // true = ligado
-    // 1 = ligado
-    // High = ligado
-    // false = desligado
-    // 0 = desligado
-    // false = desligado
-    //Se alarm == 1 (verdadeiro), o alarme será acionado (HIGH).
-    //Se alarm == 0 (falso), o alarme será desligado (LOW).
+    //INÍCIO DA BORDA:
+    if(onButton){
+       onButtonBuffer = true;
+    }
+    //FIM DA BORDA:
+    if(onButtonBuffer && !onButton){
+        systemOn = !systemOn;
+        Serial.println("Sistema ativado: " + String(systemOn));
+        onButtonBuffer = false;
+    }
+
+    
 
      // Se o botao liga estiver acionado:
     if(onButton == true){
