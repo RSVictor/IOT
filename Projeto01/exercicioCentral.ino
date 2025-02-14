@@ -53,7 +53,7 @@ void loop()
         if (barSensor == false || window1Sensor == false || window2Sensor == false ||
         roomSensor == true || kitchenSensor == true || hallSensor == true || garageSensor == true){
 
-            alarm = 1;
+            alarm = 1;// Ligar o alarme
         }
         
 
