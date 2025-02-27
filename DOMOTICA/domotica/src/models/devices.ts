@@ -1,12 +1,12 @@
 export class Device {
-    nome: string = "";
+    name: string = "";
     state: boolean = false;
     color: string  =   "#B2BEBF";
 }
 
 
-export class Places {
-    nome: string = "";
+export class Environment {
+    name: string = "";
     state: Array<Device> = []
 }
 
