@@ -2,6 +2,7 @@ export class Device {
     name: string = "";
     state: boolean = false;
     color: string  =   "#B2BEBF";
+    icon: string  "device";
 }
 
 
