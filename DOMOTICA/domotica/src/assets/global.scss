@@ -2,10 +2,13 @@
 @use "reset.scss";
 @use "variables.scss";
 
+@use 'material-icons/iconfont/material-icons.css';
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 #app{
     min-width: 100vh;
     min-height: 100vh;
     background-color: var(--backgrpund-light-color);
+    font-family: 'Dosis';
 }
 

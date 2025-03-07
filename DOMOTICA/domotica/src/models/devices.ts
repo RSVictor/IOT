@@ -1,14 +1,13 @@
 export class Device {
     name: string = "";
     state: boolean = false;
-    color: string  =   "#B2BEBF";
-    icon: string  "device";
+    color: string = "#827d85";
+    icon: string = "device";
 }
-
 
 export class Environment {
     name: string = "";
-    state: Array<Device> = []
+    devices: Array<Device> = []
 }
 
 

@@ -1,5 +1,6 @@
 <script setup lang="ts">
     import { Device, Environment } from '@/models/devices';
+    import DeviceComponent from '@/components/DeviceComponent.vue';
     import { reactive, ref } from 'vue';
 
     const environments: Array<Environment> = reactive([]);
@@ -20,15 +21,21 @@
     iluminacao.color = '#4d0d75';
     iluminacao.icon = 'light'
 
+    const tomada: Device = reactive(new Device());
+    tomada.name = 'Tomada Inteligente';
+    tomada.color = '#4d0d75';
+    tomada.icon = 'power';
+
+
+
     const sala: Environment = reactive(new Environment());
     sala.name = 'Sala';
-    sala.devices = [ar,tv,iluminacao];
+    sala.devices = [ar,tv,iluminacao,tomada];
     //sala.devices.push(ar);
     //sala.devices.push(tv);
     //sala.devices.push(iluminacao);
  
     environments.push(sala);
-  
 
 </script>
 
@@ -38,12 +45,13 @@
         <section class="environments flex flex-column border-round-sm">
             <div class="device" v-for="(environment, env_id) in environments" :key="env_id">
                 <h3>{{ environment.name }}</h3>
-                <div v-for="(device, dev_id) in environment.devices" :key="dev_id"></div>
-                <section>
-                    <h5>{{ device.name }}</h5>
-                    <button>ON</button>
-                </section>
-            </div>
+                <div v-for="(device, dev_id) in environment.devices" :key="dev_id">
+                    <section :class="`${dev_id}`">
+
+                      <DeviceComponent :device="device"/>
+
+                    </section>
+                </div>
             </div>
         </section>
     </main>
@@ -57,7 +65,7 @@
             width: 90vw;
             min-height: 95vh;
             background-color: rgb(206, 160, 160);
-            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
         }
     }
 </style>
