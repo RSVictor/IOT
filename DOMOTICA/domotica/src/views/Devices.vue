@@ -43,14 +43,10 @@
     <main class="flex flex-column text-center justify-content-center align-items-center">
         <h1>Devices page!!!!</h1>
         <section class="environments flex flex-column border-round-sm">
-            <div class="device" v-for="(environment, env_id) in environments" :key="env_id">
-                <h3>{{ environment.name }}</h3>
-                <div v-for="(device, dev_id) in environment.devices" :key="dev_id">
-                    <section :class="`${dev_id}`">
-
-                      <DeviceComponent :device="device"/>
-
-                    </section>
+            <div class="device" v-for="(environment, env_id) in environments" :key="env_id">                
+                <div v-for="(environment, dev_id) in environments.devices" :key="dev_id">
+                   <EnvironmentComponent :environment="environment"/>
+                                     
                 </div>
             </div>
         </section>
