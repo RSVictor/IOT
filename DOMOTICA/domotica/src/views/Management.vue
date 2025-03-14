@@ -4,7 +4,8 @@
     import EnvironmentComponent from '@/components/EnvironmentComponent.vue';
 
     const environments: Array<Environment> = reactive([]);
-        
+    const selectEnvironment = ref(new Environment());
+
     const ar: Device = reactive(new Device());
     ar.name = 'Ar condicionado';
     ar.color = '#3266a8';
@@ -50,13 +51,13 @@
     <section class="environments flex flex-column border-round-sm" >
         <div class="flex flex-row">
         <label for="">Ambiente:</label>
-        <select name="" id="">
-            <option v-for="(currentEnv,envId) in environments" :key="envId" value="" >
+        <select name="" id="" v-model="selectEnvironment">
+            <option v-for="(currentEnv,envId) in environments" :key="envId" :value="currentEnv" >
                 {{currentEnv.name}}</option>            
         </select>               
         </div>
         <div>
-            <EnvironmentComponent/>
+            <EnvironmentComponent :environment="selectEnvironment"/>
         </div>
     </section>
 </main>
