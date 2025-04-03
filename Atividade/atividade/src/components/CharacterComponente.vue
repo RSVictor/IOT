@@ -1,27 +1,27 @@
 <script setup lang="ts">
 import { Character } from '../models/Character';
 
+
 const props = defineProps({
     character: { type: Character, required: true },
     showInfo: {type: Boolean, default: true},
+    showButtons: { type: Boolean, default: true },
 });
 
-const ChangeCharacter = (newState: boolean) =>{
-    props.character.state = newState;
-}
 
 </script>
 
 <template>
     <section 
-     :class="`flex flex-column text-center align-items-center 
-        justify-content-start device-${props.character.state}`">        
+     :class="`flex flex-start text-center align-items-center 
+        justify-content-start`">        
+        <div v-if="!props.showButtons" class="remove-container flex mt-2 justify-content-end align-items-center">
+            <span class="icons material-icons-round ">delete</span>
+        </div>
        <div>
-        <h5>{{props.character.name}}</h5>   
-        <span class="icons material-icons-round">{{ props.character.icon }}</span>       
-        <div class="flex flex-row" v-if="props.showInfo">
-            <button class="device-buttons on-button mr-1" @click="ChangeCharacter(true)"><span class="material-symbols-outlined">add</span></button>
-            <
+        <h5>{{props.character.name}}</h5>  
+         <div class="flex flex-row" v-if="props.showButtons">       
+            <button class="device-buttons on-button mr-1" @click="changeDevice(true)">Exibir </button>   
        </div>
         
     </div>
@@ -30,8 +30,8 @@ const ChangeCharacter = (newState: boolean) =>{
 
 <style scoped lang="scss">
     section{
-        background-color: rgb(212, 221, 218);
-        border: 1px solid gray;
+        background-color: rgb(50, 187, 141);
+        border: 1px solid rgb(187, 51, 51);
         width: 10rem;
         height: 7.5rem;
         margin: 0.5rem;        
@@ -40,10 +40,22 @@ const ChangeCharacter = (newState: boolean) =>{
             margin: 0.5rem;        
             color: rgb(87, 82, 82);    
         }
+        .remove-container{
+            width: 100%;
+            height: 1rem;
+            span{
+                font-size: 0.85rem;
+                cursor: pointer;
+                &:hover{
+                    transform: scale(1.25);
+                    color: rgb(87, 18, 18);
+                }
+            }
+        }
 
        
     }
-    .device-buttons{
+    .character-buttons{
         border: none;
         padding: 0.6rem;
         border-radius: 0.2rem 0rem;   

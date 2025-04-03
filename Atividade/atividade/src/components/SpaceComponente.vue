@@ -2,28 +2,18 @@
     import { Character } from '../models/Character';
     import { Space } from '../models/Character';
 
-    const props = defineProps({
-        space: { type: Space, required: true },
-        showInfo: { type: Boolean, default: true },
-    });
-    
+    const props = defineProps ({ 
+      space: { type: Space, required: true},
+      });
 </script>
 
 <template>
-    <section class="flex flex-column">
-      <h2>{{ props.space.name }}</h2>
-      <div>
-        <div v-if="props.showInfo">
-            <p>{{ props.space.idade }}</p>
-            <p>{{ props.space.altura }}</p>
-
-        </div>
+  <div class="flex flex-column"> 
+    <div class="flex flex-row">
+      <div v-for="(person, personId) in space.persons" :key="personId" >          
       </div>
-
-      
-
-    </section>
-      
+    </div>
+  </div>
 </template>
     
 <style scoped lang="scss">   

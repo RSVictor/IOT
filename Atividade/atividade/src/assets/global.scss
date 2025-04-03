@@ -1,7 +1,7 @@
-@import "primeflex/primeflex.css";
-//@import '~material-icons/iconfont/material-icons.css';
-@import "reset.scss";
-@import "variables.scss";
+@use "primeflex/primeflex.css";
+//@use 'material-icons/iconfont/material-icons.css';
+@use "reset.scss";
+@use "variables.scss";
 
 @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap');
 

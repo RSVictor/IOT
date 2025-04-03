@@ -2,6 +2,10 @@
 import { Character, Space } from '../models/Character';
 import { reactive, ref } from 'vue';
 import SpaceComponente from '../components/SpaceComponente.vue';
+import { useCharacterStore } from '../stores/characterStore';
+
+// Pegando os dados do store
+const store = useCharacterStore();
 
 // Definir os espaços e personagens
 const spaces: Array<Space> = reactive([]);
@@ -9,7 +13,7 @@ const spaces: Array<Space> = reactive([]);
 // Personagem inicial
 const user1: Character = reactive(new Character());
 user1.name = "Personagem 1";
-user1.altura = "1.75m";
+user1.altura = "1.72m";
 user1.idade = "25";
 user1.icon = "person";
 
@@ -66,21 +70,22 @@ const deleteCharacter = (personId: number) => {
     </div>
 
     <!-- Exibição dos espaços e personagens -->
-    <section class="spaces flex flex-grid border-round-sm">
+    <section class="spaces flex flex-wrap justify-content-center border-round-sm">
       <div v-for="(space, spaceId) in spaces" :key="spaceId">
         
-        <div v-for="(person, personId) in space.persons" :key="personId">
-          <p><strong>{{ person.name }}</strong></p>
-          <p>Altura: {{ person.altura }}</p>
-          <p>Idade: {{ person.idade }}</p>
-          <p><img :src="`/icons/${person.icon}.png`" alt="Ícone do personagem" /></p>
+        <div class="cards flex flex-row justify-content-center border-round-sm">
+          <div v-for="(person, personId) in space.persons" :key="personId">
+        <p>{{ person.name }} - {{ person.idade }} anos - {{ person.altura }}m</p>
+            
           
           <!-- Botão para excluir personagem -->
           <button @click="deleteCharacter(personId)">
             <span class="material-icons"></span> Excluir Personagem
           </button>
         </div>
+        </div>
       </div>
+    
     </section>
   </main>
 </template>
@@ -94,6 +99,15 @@ const deleteCharacter = (personId: number) => {
       min-height: 95vh;
       background-color: rgb(73, 67, 67);
       box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    }
+    .card{
+      background-color: rgb(212, 221, 218);
+  border: 1px solid rgb(187, 51, 51);
+  padding: 1rem;
+  width: 12rem; /* Largura fixa para os cards */
+  text-align: center;
+  border-radius: 0.5rem;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 12px;
     }
   }
 

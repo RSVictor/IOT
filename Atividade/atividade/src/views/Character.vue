@@ -1,20 +1,24 @@
 <script setup lang="ts">
 import { Character, Space } from '../models/Character';
 import { reactive, ref } from 'vue';
+import { useCharacterStore } from '../stores/characterStore';
 import SpaceComponente from '../components/SpaceComponente.vue';
 
+// Pegando os dados do store
+const store = useCharacterStore();
 // Definir os espaços e personagens
 const spaces: Array<Space> = reactive([]);
 
 // Personagem inicial
 const user1: Character = reactive(new Character());
 user1.name = "Personagem 1";
-user1.altura = "1.75m";
+user1.altura = "1.7m";
 user1.idade = "25";
 user1.icon = "person";
 
 // Criando o espaço com personagens
 const space1: Space = reactive(new Space());
+space1.name = 'Quadro de Personagens'
 space1.persons = [user1];
 
 // Adicionando o espaço à lista de espaços
@@ -31,22 +35,11 @@ const showForm = ref(false); // Controle de exibição do formulário
 
 <template>
   <main class="flex flex-column text-center justify-content-center align-items-center">
-    <h1>Seus Personagens! 😎</h1>
-
-    
-
-    <!-- Exibição dos espaços e personagens -->
+        <h1>Seus Personagens! 😎</h1>      
     <section class="spaces flex flex-grid border-round-sm">
-      <div v-for="(space, spaceId) in spaces" :key="spaceId">
-        
-        <div v-for="(person, personId) in space.persons" :key="personId">
-          <p><strong>{{ person.name }}</strong></p>
-          <p>Altura: {{ person.altura }}</p>
-          <p>Idade: {{ person.idade }}</p>
-          <p><img :src="`/icons/${person.icon}.png`" alt="Ícone do personagem" /></p>
-          
-          
-        </div>
+      <div v-for="(space, env_Id) in spaces" :key="env_Id">
+        <SpaceComponente :space="space"/>            
+                            
       </div>
     </section>
   </main>
