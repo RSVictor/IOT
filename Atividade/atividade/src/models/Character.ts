@@ -1,8 +1,9 @@
-export class Character{
-    name: string = "";
-    idade: number = 0;
-    altura: number = 0;
-    icon: string = "person"
+export interface Character{
+    name: string ;
+    height: string;
+    peso: string;
+    birth_year: string;
+    image?: String;
 }
 
 export class Space {

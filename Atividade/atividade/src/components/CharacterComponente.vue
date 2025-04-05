@@ -1,72 +1,68 @@
 <script setup lang="ts">
-import { Character } from '../models/Character';
-
+import { Character } from '@/models/Character';
+import { ref } from 'vue';
 
 const props = defineProps({
-    character: { type: Character, required: true },
-    showInfo: {type: Boolean, default: true},
-    showButtons: { type: Boolean, default: true },
+  character: { type: Character, required: true },
+  showInfo: { type: Boolean, default: true },
+  showButtons: { type: Boolean, default: true },
 });
 
+const emit = defineEmits(['delete']);
+const expanded = ref(false);
 
+const toggleExpanded = () => {
+  expanded.value = !expanded.value;
+};
+
+const handleDelete = () => {
+  emit('delete');
+};
 </script>
 
+
 <template>
-    <section 
-     :class="`flex flex-start text-center align-items-center 
-        justify-content-start`">        
-        <div v-if="!props.showButtons" class="remove-container flex mt-2 justify-content-end align-items-center">
-            <span class="icons material-icons-round ">delete</span>
-        </div>
-       <div>
-        <h5>{{props.character.name}}</h5>  
-         <div class="flex flex-row" v-if="props.showButtons">       
-            <button class="device-buttons on-button mr-1" @click="changeDevice(true)">Exibir </button>   
-       </div>
-        
-    </div>
+    <section class="card" @click="toggleExpanded">      
+      <h5>{{ props.character.name }}</h5>
+  
+      <div v-if="expanded">
+        <p><strong>Idade:</strong> {{ props.character.idade }}</p>
+        <p><strong>Altura:</strong> {{ props.character.altura }}</p>
+        <p><strong>Ícone:</strong> {{ props.character.icon }}</p>
+      </div>
+      <div v-else class="hint">Clique para ver mais</div>
+        <!-- Ícone de deletar só aparece se showButtons for true -->
+        <div class="delete-btn" v-if="props.showButtons" @click.stop="handleDelete">
+        <span class="material-icons">delete</span>
+      </div>
     </section>
-</template>
-
-<style scoped lang="scss">
-    section{
-        background-color: rgb(50, 187, 141);
-        border: 1px solid rgb(187, 51, 51);
-        width: 10rem;
-        height: 7.5rem;
-        margin: 0.5rem;        
-        .icons{
-            width: 1.5rem;
-            margin: 0.5rem;        
-            color: rgb(87, 82, 82);    
-        }
-        .remove-container{
-            width: 100%;
-            height: 1rem;
-            span{
-                font-size: 0.85rem;
-                cursor: pointer;
-                &:hover{
-                    transform: scale(1.25);
-                    color: rgb(87, 18, 18);
-                }
-            }
-        }
-
-       
-    }
-    .character-buttons{
-        border: none;
-        padding: 0.6rem;
-        border-radius: 0.2rem 0rem;   
-        cursor: pointer;  
-        &:hover{
-          opacity: 0.6;  
-          transform: scale(1.05);
-          transition: 0.5s;        
-        }   
-    }        
+  </template>
+  
+  <style scoped lang="scss">
+  .card {
+    background-color: rgb(50, 187, 141);
+    border: 1px solid rgb(187, 51, 51);
+    width: 12rem;
+    margin: 0.5rem;
+    padding: 1rem;
+    text-align: center;
+    border-radius: 0.5rem;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
 
     
-
-</style>
+  
+    &:hover {
+      transform: scale(1.02);
+      background-color: rgb(46, 170, 129);
+    }
+  
+    .hint {
+      font-size: 0.85rem;
+      color: #333;
+      opacity: 0.7;
+    }
+  }
+  </style>
+  

@@ -1,54 +1,47 @@
 <script setup lang="ts">
-import { Character, Space } from '../models/Character';
-import { reactive, ref } from 'vue';
-import SpaceComponente from '../components/SpaceComponente.vue';
-import { useCharacterStore } from '../stores/characterStore';
+import { Character, Space } from '@/models/Character';
+import { reactive, ref, onMounted } from 'vue';
+import { useCharacterStore } from '@/stores/characterStore';
+import CharacterComponent from '@/components/CharacterComponente.vue';
 
-// Pegando os dados do store
+
 const store = useCharacterStore();
-
-// Definir os espaços e personagens
-const spaces: Array<Space> = reactive([]);
-
-// Personagem inicial
-const user1: Character = reactive(new Character());
-user1.name = "Personagem 1";
-user1.altura = "1.72m";
-user1.idade = "25";
-user1.icon = "person";
-
-// Criando o espaço com personagens
-const space1: Space = reactive(new Space());
-space1.persons = [user1];
-
-// Adicionando o espaço à lista de espaços
-spaces.push(space1);
-
-// Definir as variáveis de controle para adicionar personagens
 const newPerson = reactive(new Character());
-const showForm = ref(false); // Controle de exibição do formulário
+const showForm = ref(false);
 
-// Função para adicionar um personagem
+// Inicializa com um espaço, se ainda não tiver
+onMounted(() => {
+  if (store.spaces.length === 0) {
+    const user1 = reactive(new Character());
+    user1.name = "Personagem 1";
+    user1.idade = "25";
+    user1.altura = "1.7m";
+    user1.icon = "person";
+
+    const space = reactive(new Space());
+    space.name = "Quadro";
+    space.persons = [user1];
+    store.setSpaces([space]);
+  }
+});
+
 const addCharacter = () => {
   if (newPerson.name && newPerson.idade && newPerson.altura) {
-    const newCharacter: Character = reactive(new Character());
-    newCharacter.name = newPerson.name;
-    newCharacter.idade = newPerson.idade;
-    newCharacter.altura = newPerson.altura;
-    newCharacter.icon = 'person'; // Pode ser configurado dinamicamente
+    const newChar = reactive(new Character());
+    Object.assign(newChar, newPerson);
+    newChar.icon = "person";
 
-    // Adicionando o novo personagem ao espaço
-    space1.persons.push(newCharacter);
-    newPerson.name = ''; // Resetando os campos após adição
+    store.addCharacterToSpace(0, newChar); // Adiciona no espaço 0
+
+    // Limpa os campos
+    newPerson.name = '';
     newPerson.idade = '';
     newPerson.altura = '';
   }
 };
 
-// Função para excluir um personagem
-const deleteCharacter = (personId: number) => {
-  const space = spaces[0]; // Pegando o primeiro espaço (exemplo)
-  space.persons = space.persons.filter((person, index) => index !== personId);
+const deleteCharacter = (index: number) => {
+  store.removeCharacterFromSpace(0, index);
 };
 </script>
 
@@ -70,23 +63,16 @@ const deleteCharacter = (personId: number) => {
     </div>
 
     <!-- Exibição dos espaços e personagens -->
-    <section class="spaces flex flex-wrap justify-content-center border-round-sm">
-      <div v-for="(space, spaceId) in spaces" :key="spaceId">
-        
-        <div class="cards flex flex-row justify-content-center border-round-sm">
-          <div v-for="(person, personId) in space.persons" :key="personId">
-        <p>{{ person.name }} - {{ person.idade }} anos - {{ person.altura }}m</p>
-            
-          
-          <!-- Botão para excluir personagem -->
-          <button @click="deleteCharacter(personId)">
-            <span class="material-icons"></span> Excluir Personagem
-          </button>
-        </div>
-        </div>
-      </div>
-    
-    </section>
+    <section class="spaces flex flex-wrap justify-content-center">
+  <div v-for="(person, index) in store.spaces[0]?.persons" :key="index">
+    <CharacterComponent
+      :character="person"
+      :id="index"
+      :showButtons="true"
+      @delete="deleteCharacter"
+    />
+  </div>
+</section>
   </main>
 </template>
 
