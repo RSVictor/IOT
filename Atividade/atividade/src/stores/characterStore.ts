@@ -1,24 +1,26 @@
 import { defineStore } from 'pinia';
-import { Character, Space } from '@/models/Character';
+import axios from 'axios';
+import type { Character } from '@/models/Character';
 
-export const useCharacterStore = defineStore('character', {
+export const useCharacterStore = defineStore('characterStore', {
   state: () => ({
-    spaces: [] as Space[]
+    characters: [] as Character[],
   }),
 
   actions: {
-    setSpaces(newSpaces: Space[]) {
-      this.spaces = newSpaces;
+    async fetchCharacters() {
+      try {
+        const res = await axios.get('https://swapi.dev/api/people/');
+        this.characters = res.data.results.map((char: any) => ({
+          name: char.name,
+          height: char.height,
+          mass: char.mass,
+          birth_year: char.birth_year,
+          imageUrl: '', 
+        }));
+      } catch (err) {
+        console.error('Erro ao buscar personagens:', err);
+      }
     },
-
-    addCharacterToSpace(spaceIndex: number, character: Character) {
-      if (!this.spaces[spaceIndex]) return;
-      this.spaces[spaceIndex].persons.push(character);
-    },
-
-    removeCharacterFromSpace(spaceIndex: number, personIndex: number) {
-      if (!this.spaces[spaceIndex]) return;
-      this.spaces[spaceIndex].persons.splice(personIndex, 1);
-    }
-  }
+  },
 });
