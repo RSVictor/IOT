@@ -6,7 +6,7 @@ export const getDevices = (): Promise<ApiResponse<Device>>=> {
 }
 
 export const saveDevice = (device:NewDevice): Promise<void>=> {    
-    return getCdn().post("/", device);
+    return getApi().post("/", device);
 }
 
 
