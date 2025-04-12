@@ -3,7 +3,7 @@ export class Character {
     height: string="";
     mass: string ="";
     birth_year: string ="";
-    image?: string;
+    image: string ='';
   }
   
 export class Space {

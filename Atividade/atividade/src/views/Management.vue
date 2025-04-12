@@ -9,34 +9,22 @@ const store = useCharacterStore();
 const newPerson = reactive(new Character());
 const showForm = ref(false);
 
-// Inicializa com um espaço, se ainda não tiver
-onMounted(() => {
-  if (store.spaces.length === 0) {
-    const user1 = reactive(new Character());
-    user1.name = "Personagem 1";
-    user1.idade = "25";
-    user1.altura = "1.7m";
-    user1.icon = "person";
-
-    const space = reactive(new Space());
-    space.name = "Quadro";
-    space.persons = [user1];
-    store.setSpaces([space]);
-  }
+onMounted(async () => {
+  await store.fetchCharacters();
 });
 
 const addCharacter = () => {
-  if (newPerson.name && newPerson.idade && newPerson.altura) {
+  if (newPerson.name && newPerson.birth_year && newPerson.height) {
     const newChar = reactive(new Character());
     Object.assign(newChar, newPerson);
-    newChar.icon = "person";
+    newChar.image = "person";
 
     store.addCharacterToSpace(0, newChar); // Adiciona no espaço 0
 
     // Limpa os campos
     newPerson.name = '';
-    newPerson.idade = '';
-    newPerson.altura = '';
+    newPerson.birth_year = '';
+    newPerson.height = '';
   }
 };
 
@@ -57,8 +45,9 @@ const deleteCharacter = (index: number) => {
     <!-- Formulário de adição de personagem -->
     <div v-if="showForm">
       <input v-model="newPerson.name" placeholder="Nome" />
-      <input v-model="newPerson.idade" placeholder="Idade" type="number" />
-      <input v-model="newPerson.altura" placeholder="Altura" type="number" step="0.01" />
+      <input v-model="newPerson.birth_year" placeholder="Idade" type="number" />      
+      <input v-model="newPerson.height" placeholder="Altura" type="number" step="0.01" />
+      <input v-model="newPerson.mass" placeholder="Peso" type="number" />
       <button @click="addCharacter">Adicionar Personagem</button>
     </div>
 
@@ -87,7 +76,7 @@ const deleteCharacter = (index: number) => {
       box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     }
     .card{
-      background-color: rgb(212, 221, 218);
+      background-color: rgb(50, 187, 141);
   border: 1px solid rgb(187, 51, 51);
   padding: 1rem;
   width: 12rem; /* Largura fixa para os cards */

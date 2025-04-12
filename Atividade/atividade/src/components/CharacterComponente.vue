@@ -26,9 +26,10 @@ const handleDelete = () => {
       <h5>{{ props.character.name }}</h5>
   
       <div v-if="expanded">
-        <p><strong>Idade:</strong> {{ props.character.idade }}</p>
-        <p><strong>Altura:</strong> {{ props.character.altura }}</p>
-        <p><strong>Ícone:</strong> {{ props.character.icon }}</p>
+        <p><strong>Idade:</strong> {{ props.character.birth_year }}</p>
+        <p><strong>Altura:</strong> {{ props.character.height }}</p>
+        <p><strong>Peso:</strong> {{ props.character.mass }}</p>
+        <p><strong>Imagem:</strong> {{ props.character.image }}</p>
       </div>
       <div v-else class="hint">Clique para ver mais</div>
         <!-- Ícone de deletar só aparece se showButtons for true -->
