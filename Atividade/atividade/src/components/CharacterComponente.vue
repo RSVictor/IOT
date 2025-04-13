@@ -31,8 +31,7 @@ const handleDelete = () => {
         <p><strong>Peso:</strong> {{ props.character.mass }}</p>
         <p><strong>Imagem:</strong> {{ props.character.image }}</p>
       </div>
-      <div v-else class="hint">Clique para ver mais</div>
-        <!-- Ícone de deletar só aparece se showButtons for true -->
+      <div v-else class="dica">Clique para ver mais</div>
         <div class="delete-btn" v-if="props.showButtons" @click.stop="handleDelete">
         <span class="material-icons">delete</span>
       </div>
@@ -42,7 +41,7 @@ const handleDelete = () => {
   <style scoped lang="scss">
   .card {
     background-color: rgb(50, 187, 141);
-    border: 1px solid rgb(187, 51, 51);
+    border: 1px solid rgb(29,21,21);
     width: 12rem;
     margin: 0.5rem;
     padding: 1rem;
@@ -59,7 +58,7 @@ const handleDelete = () => {
       background-color: rgb(46, 170, 129);
     }
   
-    .hint {
+    .dica {
       font-size: 0.85rem;
       color: #333;
       opacity: 0.7;

@@ -5,7 +5,7 @@ import type { Character } from '@/models/Character';
 export const useCharacterStore = defineStore('characterStore', {
   state: () => ({
     characters: [] as Character[],
-    spaces: [] as { name: string; persons: Character[] }[], // 👈 Adicionado
+    spaces: [] as { name: string; persons: Character[] }[],
   }),
 
   actions: {
@@ -17,7 +17,7 @@ export const useCharacterStore = defineStore('characterStore', {
         birth_year: char.birth_year,
         height: char.height,
         mass: char.mass,
-        image: 'https://static.wikia.nocookie.net/herois/images/1/12/Luke_Skywalker_Jedi_robe.webp/revision/latest?cb=20240317034233&path-prefix=pt-br'
+        image: ''
       }));
   
       this.spaces = [
