@@ -1,49 +1,23 @@
 <script setup lang="ts">    
-    import DeviceComponent from '@/components/DeviceComponent.vue';
+
     import EnvironmentComponent from '@/components/EnvironmentComponent.vue';
     import { Device, Environment } from '@/models/devices';
+    import { getEnvironments } from '@/services/environments.service';
     import { reactive, ref } from 'vue';
 
     const environments: Array<Environment> = reactive([]);
-        
-    const ar: Device = reactive(new Device());
-    ar.name = 'Ar condicionado';
-    ar.color = '#3266a8';
-    ar.icon = 'heat_pump';
-    ar.state = true;
-
-    const tv: Device = reactive(new Device());
-    tv.name = 'Smart TV';
-    tv.color = '#a5c949';
-    tv.state = true;   
-    tv.icon = 'tv';
-
-    const iluminacao: Device = reactive(new Device());
-    iluminacao.name = 'Iluminação';
-    iluminacao.color = '#4d0d75';
-    iluminacao.icon = 'light'
-
-    const tomada: Device = reactive(new Device());
-    tomada.name = 'Tomada Inteligente';
-    tomada.color = '#4d0d75';
-    tomada.icon = 'power'
-
-    const cafeteira: Device = reactive(new Device());
-    cafeteira.name = 'Cafeteira';
-    cafeteira.color = '#4d0d75';
-    cafeteira.icon = 'coffee_maker'
     
-    const sala: Environment = reactive(new Environment());
-    sala.name = 'Sala';
-    sala.devices = [ar,tv,iluminacao,tomada];
-    
-    const cozinha: Environment = reactive(new Environment());
-    cozinha.name = 'Cozinha';
-    cozinha.devices = [cafeteira];
- 
-    environments.push(sala);  
-    environments.push(cozinha);  
-    
+    getEnvironments()
+        .then(response=>{
+            response.items.forEach(item=>{
+                    if(item.fields) environments.push(item.fields);
+                }                
+            )            
+        })
+        .catch(error=>{
+            console.error("Error when getting Environments: ",error);
+        })
+
   </script>
 
 <template>
